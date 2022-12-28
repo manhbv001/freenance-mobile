@@ -1,8 +1,11 @@
-import { Flex } from "native-base";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
-import Actions from "./Actions";
+import { useNavigation } from '@react-navigation/native';
+import { Flex } from 'native-base';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import Actions from './Actions';
 
-export default function MainLayout({ children, navigation }) {
+export default function MainLayout({ children }) {
+  const navigation = useNavigation();
+
   const handleActionClick = (screen, data) => {
     navigation.navigate(screen);
   };
@@ -26,6 +29,6 @@ const style = StyleSheet.create({
   },
   body: {
     flexGrow: 1,
-    height: Dimensions.get("window").height - 64,
+    height: Dimensions.get('window').height - 64,
   },
 });

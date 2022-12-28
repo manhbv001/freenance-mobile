@@ -6,9 +6,7 @@ import {
   Flex,
   FormControl,
   Input,
-  Radio,
   Select,
-  Text,
   TextArea,
   useTheme,
   WarningOutlineIcon
@@ -21,31 +19,24 @@ import {
   StyleSheet,
   TouchableWithoutFeedback
 } from 'react-native';
-import CreateGroupModal from '../../components/Group/CreateGroupModal';
 import { useToastMessage } from '../../hooks/toast.hook';
 import categoryServices from '../../services/category.services';
-import groupServices from '../../services/group.services';
+import transactionServices from '../../services/transaction.services';
 import { numberWithCommas } from '../../utils/numer.util';
 
-export default function CreateCategoryScreen() {
+export default function CreateTransactionScreen() {
   const { colors } = useTheme();
   const { navigate } = useNavigation();
   const { showToast } = useToastMessage();
 
-  const [name, setName] = useState();
-  const [type, setType] = useState();
-  const [group, setGroup] = useState();
-  const [budget, setBudget] = useState();
+  const [category, setCategory] = useState();
+  const [amount, setAmount] = useState();
   const [note, setNote] = useState();
 
-  const [groupModalStatus, setGroupModelStatus] = useState(false);
-  const [groups, setGroups] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-  const handleBudgetChange = (value) => setBudget(value);
-  const handleNameChange = (value) => setName(value);
+  const handleAmountChange = (value) => setAmount(value);
   const handleNoteChange = (value) => setNote(value);
-  const handleOpenGroupModal = () => setGroupModelStatus(true);
-  const handleCloseGroupModal = () => setGroupModelStatus(false);
 
   const inputProps = useMemo(() => {
     return {
@@ -59,14 +50,14 @@ export default function CreateCategoryScreen() {
 
   const handleSubmit = () => {
     const payload = {
-      name,
-      type,
-      description: note,
-      budget: +budget,
-      groupId: group,
+      note,
+      amount: +amount,
+      timestamp: new Date(),
+      categoryId: category,
     };
-    categoryServices
-      .createCategory(payload)
+
+    transactionServices
+      .createTransaction(payload)
       .then(() => {
         showToast('', 'Success!');
         navigate('Home');
@@ -77,24 +68,20 @@ export default function CreateCategoryScreen() {
   };
 
   useEffect(() => {
-    groupServices
-      .getAllGroup()
+    categoryServices
+      .getAllCategories()
       .then((response) => {
         if (response.success) {
-          setGroups(response.data);
+          setCategories(response.data);
         } else {
           console.log(response);
         }
       })
       .catch((e) => console.log(JSON.stringify(e)));
-  }, [groupModalStatus]);
+  }, []);
 
   return (
     <>
-      <CreateGroupModal
-        onClose={handleCloseGroupModal}
-        status={groupModalStatus}
-      />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{ flex: 1 }}
@@ -102,49 +89,31 @@ export default function CreateCategoryScreen() {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <Flex style={{ flex: 1, justifyContent: 'space-around' }}>
             <Box style={style.background} padding={4} alignItems="center">
-              <Flex flexDir="row" width="100%">
-                <Box width="25%">
-                  <Text>Avt</Text>
-                </Box>
-                <Box flexGrow={1}>
-                  <FormControl isRequired style={style.formControl}>
-                    <FormControl.Label fontSize="sm">Name</FormControl.Label>
-                    <Input {...inputProps} onChangeText={handleNameChange} />
-                    <FormControl.ErrorMessage
-                      leftIcon={<WarningOutlineIcon size="xs" />}
-                    >
-                      You must enter category name
-                    </FormControl.ErrorMessage>
-                  </FormControl>
-                </Box>
-              </Flex>
-              <FormControl isRequired style={style.formControl}>
-                <FormControl.Label>Type</FormControl.Label>
-                <Radio.Group onChange={setType} name="type" flexDirection="row">
-                  <Radio value={0}>Income</Radio>
-                  <Radio style={{ marginLeft: 24 }} value={1}>
-                    Expense
-                  </Radio>
-                </Radio.Group>
-                <FormControl.ErrorMessage
-                  leftIcon={<WarningOutlineIcon size="xs" />}
-                >
-                  You must select a category type.
-                </FormControl.ErrorMessage>
+              <FormControl style={style.formControl}>
+                <FormControl.Label fontSize="sm">Amount</FormControl.Label>
+                <Input
+                  {...inputProps}
+                  value={numberWithCommas(amount || '')}
+                  keyboardType="numeric"
+                  onChangeText={handleAmountChange}
+                />
+                <FormControl.HelperText>
+                  Amount of the transaction
+                </FormControl.HelperText>
               </FormControl>
               <Flex w="100%" flexDir="row" alignItems="center">
                 <Box flexGrow={1}>
                   <FormControl style={style.formControl} isRequired>
-                    <FormControl.Label>Choose group</FormControl.Label>
+                    <FormControl.Label>Choose category</FormControl.Label>
                     <Select
-                      accessibilityLabel="Group"
-                      placeholder="Group"
+                      accessibilityLabel="Category"
+                      placeholder="Category"
                       size="2xl"
                       fontSize={18}
                       boxSize="1.5"
-                      onValueChange={setGroup}
+                      onValueChange={setCategory}
                     >
-                      {groups.map((e) => (
+                      {categories.map((e) => (
                         <Select.Item key={e.id} label={e.name} value={e.id} />
                       ))}
                     </Select>
@@ -164,23 +133,11 @@ export default function CreateCategoryScreen() {
                   w="39"
                   h="39"
                   ml={4}
-                  onPress={handleOpenGroupModal}
+                  onPress={() => navigate('CreateCategory')}
                 >
                   <AddIcon color="white" />
                 </Button>
               </Flex>
-              <FormControl style={style.formControl}>
-                <FormControl.Label fontSize="sm">Budget</FormControl.Label>
-                <Input
-                  {...inputProps}
-                  value={numberWithCommas(budget || '')}
-                  keyboardType="numeric"
-                  onChangeText={handleBudgetChange}
-                />
-                <FormControl.HelperText>
-                  The budget of money you intend to spend
-                </FormControl.HelperText>
-              </FormControl>
               <FormControl flexGrow={1} style={style.formControl}>
                 <FormControl.Label fontSize="sm">Note</FormControl.Label>
                 <TextArea

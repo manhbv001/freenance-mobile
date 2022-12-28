@@ -1,14 +1,14 @@
-import { AddIcon, Button } from "native-base";
-import { StyleSheet, View } from "react-native";
-import IconFeather from "react-native-vector-icons/Feather";
-import IconEntypo from "react-native-vector-icons/Entypo";
-import { theme } from "../../ configs/colors.config";
+import { AddIcon, Button } from 'native-base';
+import { StyleSheet, View } from 'react-native';
+import IconEntypo from 'react-native-vector-icons/Entypo';
+import IconFeather from 'react-native-vector-icons/Feather';
+import { theme } from '../../ configs/colors.config';
 
 export default function Actions({ onActionClick }) {
   return (
     <View style={style.container}>
       <Button
-        onPress={() => onActionClick("Home")}
+        onPress={() => onActionClick('Home')}
         style={style.btnCtn}
         borderRadius="50%"
         variant="ghost"
@@ -19,14 +19,14 @@ export default function Actions({ onActionClick }) {
         <IconEntypo name="list" size={24} color="emerald.700" />
       </Button>
       <Button
-        onPress={() => onActionClick("CreateCategory")}
+        onPress={() => onActionClick('CreateTransaction')}
         borderRadius="50%"
         style={style.addBtnCtn}
       >
         <AddIcon size="5" mt="0.5" color="white" />
       </Button>
       <Button
-        onPress={() => onActionClick("Search")}
+        onPress={() => onActionClick('Search')}
         style={style.btnCtn}
         borderRadius="50%"
         variant="ghost"
@@ -34,7 +34,7 @@ export default function Actions({ onActionClick }) {
         <IconFeather name="search" size={24} color="emerald.700" />
       </Button>
       <Button
-        onPress={() => onActionClick("Settings")}
+        onPress={() => onActionClick('Settings')}
         style={style.btnCtn}
         borderRadius="50%"
         variant="ghost"
@@ -47,24 +47,24 @@ export default function Actions({ onActionClick }) {
 
 const style = StyleSheet.create({
   container: {
-    width: "100%",
-    height: "100%",
-    flexDirection: "row",
-    justifyContent: "space-around",
-    alignItems: "center",
+    width: '100%',
+    height: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
   addBtnCtn: {
     width: 64,
     height: 64,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: "50%",
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '50%',
     transform: [
       {
         translateY: -10,
       },
     ],
-    backgroundColor: theme.colors.primary["300"],
+    backgroundColor: theme.colors.primary['300'],
   },
   btnCtn: {
     width: 58,
