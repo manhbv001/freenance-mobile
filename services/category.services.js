@@ -1,6 +1,6 @@
 import fetcher from "../utils/http.util";
 
-function createCategory(paylaod) {
+function createCategory(payload) {
   return fetcher.post("/categories", payload);
 }
 

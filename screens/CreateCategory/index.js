@@ -21,19 +21,22 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import CreateGroupModal from "../../components/Group/CreateGroupModal";
+import categoryServices from "../../services/category.services";
 import groupServices from "../../services/group.services";
 import { numberWithCommas } from "../../utils/numer.util";
 
 export default function CreateCategoryScreen() {
   const { colors } = useTheme();
   const [name, setName] = useState();
-  const [amount, setAmount] = useState();
+  const [type, setType] = useState();
+  const [group, setGroup] = useState();
+  const [budget, setBudget] = useState();
   const [note, setNote] = useState();
 
   const [groupModalStatus, setGroupModelStatus] = useState(false);
   const [groups, setGroups] = useState([]);
 
-  const handleAmountChange = (value) => setAmount(value);
+  const handleBudgetChange = (value) => setBudget(value);
   const handleNameChange = (value) => setName(value);
   const handleNoteChange = (value) => setNote(value);
   const handleOpenGroupModal = () => setGroupModelStatus(true);
@@ -48,6 +51,23 @@ export default function CreateCategoryScreen() {
       fontSize: 18,
     };
   }, []);
+
+  const handleSubmit = () => {
+    const payload = {
+      name,
+      type,
+      description: note,
+      budget: +budget,
+      groupId: group,
+    };
+    console.log(payload);
+    categoryServices
+      .createCategory(payload)
+      .then(() => {
+        console.info("Success");
+      })
+      .catch((e) => console.log(JSON.stringify(e)));
+  };
 
   useEffect(() => {
     groupServices
@@ -93,7 +113,7 @@ export default function CreateCategoryScreen() {
               </Flex>
               <FormControl isRequired style={style.formControl}>
                 <FormControl.Label>Type</FormControl.Label>
-                <Radio.Group name="type" flexDirection="row">
+                <Radio.Group onChange={setType} name="type" flexDirection="row">
                   <Radio value={"0"}>Income</Radio>
                   <Radio style={{ marginLeft: 24 }} value={"1"}>
                     Expense
@@ -115,6 +135,7 @@ export default function CreateCategoryScreen() {
                       size="2xl"
                       fontSize={18}
                       boxSize="1.5"
+                      onValueChange={setGroup}
                     >
                       {groups.map((e) => (
                         <Select.Item key={e.id} label={e.name} value={e.id} />
@@ -145,12 +166,12 @@ export default function CreateCategoryScreen() {
                 <FormControl.Label fontSize="sm">Budget</FormControl.Label>
                 <Input
                   {...inputProps}
-                  value={numberWithCommas(amount || "")}
+                  value={numberWithCommas(budget || "")}
                   keyboardType="numeric"
-                  onChangeText={handleAmountChange}
+                  onChangeText={handleBudgetChange}
                 />
                 <FormControl.HelperText>
-                  The amount of money you intend to spend
+                  The budget of money you intend to spend
                 </FormControl.HelperText>
                 <FormControl.ErrorMessage
                   leftIcon={<WarningOutlineIcon size="xs" />}
@@ -170,7 +191,7 @@ export default function CreateCategoryScreen() {
                 w="100%"
                 size="lg"
                 backgroundColor={colors.primary[500]}
-                onPress={() => console.log("hello world")}
+                onPress={handleSubmit}
               >
                 Save
               </Button>
