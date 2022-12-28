@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import TransactionList from "../../components/Transaction/TransactionList";
 import MainLayout from "../../layouts/main";
 

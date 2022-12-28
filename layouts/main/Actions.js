@@ -7,19 +7,38 @@ import { theme } from "../../ configs/colors.config";
 export default function Actions({ onActionClick }) {
   return (
     <View style={style.container}>
-      <Button onPress={() => onActionClick("Home")} style={style.btnCtn} borderRadius="50%" variant="ghost">
+      <Button
+        onPress={() => onActionClick("Home")}
+        style={style.btnCtn}
+        borderRadius="50%"
+        variant="ghost"
+      >
         <IconFeather name="home" size={24} color="danger.400" />
       </Button>
       <Button style={style.btnCtn} borderRadius="50%" variant="ghost">
         <IconEntypo name="list" size={24} color="emerald.700" />
       </Button>
-      <Button onPress={() => onActionClick("CreateCategory")} borderRadius="50%" style={style.addBtnCtn}>
+      <Button
+        onPress={() => onActionClick("CreateCategory")}
+        borderRadius="50%"
+        style={style.addBtnCtn}
+      >
         <AddIcon size="5" mt="0.5" color="white" />
       </Button>
-      <Button style={style.btnCtn} borderRadius="50%" variant="ghost">
+      <Button
+        onPress={() => onActionClick("Search")}
+        style={style.btnCtn}
+        borderRadius="50%"
+        variant="ghost"
+      >
         <IconFeather name="search" size={24} color="emerald.700" />
       </Button>
-      <Button style={style.btnCtn} borderRadius="50%" variant="ghost">
+      <Button
+        onPress={() => onActionClick("Settings")}
+        style={style.btnCtn}
+        borderRadius="50%"
+        variant="ghost"
+      >
         <IconFeather name="settings" size={24} color="emerald.700" />
       </Button>
     </View>
@@ -45,10 +64,10 @@ const style = StyleSheet.create({
         translateY: -10,
       },
     ],
-    backgroundColor: theme.colors.primary['300'],
+    backgroundColor: theme.colors.primary["300"],
   },
   btnCtn: {
     width: 58,
     height: 58,
-  }
+  },
 });
