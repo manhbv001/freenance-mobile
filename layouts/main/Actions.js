@@ -3,12 +3,13 @@ import { StyleSheet, View } from 'react-native';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconFeather from 'react-native-vector-icons/Feather';
 import { theme } from '../../ configs/colors.config';
+import navigationConfig from '../../ configs/navigation.config';
 
 export default function Actions({ onActionClick }) {
   return (
     <View style={style.container}>
       <Button
-        onPress={() => onActionClick('Home')}
+        onPress={() => onActionClick(navigationConfig.Screens.Home)}
         style={style.btnCtn}
         borderRadius="50%"
         variant="ghost"
@@ -19,14 +20,16 @@ export default function Actions({ onActionClick }) {
         <IconEntypo name="list" size={24} color="emerald.700" />
       </Button>
       <Button
-        onPress={() => onActionClick('CreateTransaction')}
+        onPress={() =>
+          onActionClick(navigationConfig.Screens.CreateTransaction)
+        }
         borderRadius="50%"
         style={style.addBtnCtn}
       >
         <AddIcon size="5" mt="0.5" color="white" />
       </Button>
       <Button
-        onPress={() => onActionClick('Search')}
+        onPress={() => onActionClick(navigationConfig.Screens.Search)}
         style={style.btnCtn}
         borderRadius="50%"
         variant="ghost"
@@ -34,7 +37,7 @@ export default function Actions({ onActionClick }) {
         <IconFeather name="search" size={24} color="emerald.700" />
       </Button>
       <Button
-        onPress={() => onActionClick('Settings')}
+        onPress={() => onActionClick(navigationConfig.Screens.Login)}
         style={style.btnCtn}
         borderRadius="50%"
         variant="ghost"

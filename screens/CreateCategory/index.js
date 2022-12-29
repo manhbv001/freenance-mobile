@@ -21,6 +21,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback
 } from 'react-native';
+import navigationConfig from '../../ configs/navigation.config';
 import CreateGroupModal from '../../components/Group/CreateGroupModal';
 import { useToastMessage } from '../../hooks/toast.hook';
 import categoryServices from '../../services/category.services';
@@ -69,7 +70,7 @@ export default function CreateCategoryScreen() {
       .createCategory(payload)
       .then(() => {
         showToast('', 'Success!');
-        navigate('Home');
+        navigate(navigationConfig.Screens.Home);
       })
       .catch((e) => {
         console.log(JSON.stringify(e));
