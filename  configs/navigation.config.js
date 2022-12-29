@@ -4,15 +4,9 @@ import HomeScreen from '../screens/Home';
 import LoginScreen from '../screens/Login';
 import SearchScreen from '../screens/Search/ index';
 import SettingsScreen from '../screens/Settings';
+import constantConfig from './constant.config';
 
-const Screens = {
-  Home: 'home',
-  CreateCategory: 'create_category',
-  Search: 'search',
-  Settings: 'settings',
-  CreateTransaction: 'create_transaction',
-  Login: 'login',
-};
+const Screens = constantConfig.Screens;
 
 const navigationRoutes = [
   {
@@ -62,5 +56,4 @@ const navigationRoutes = [
 
 export default {
   navigationRoutes,
-  Screens,
 };

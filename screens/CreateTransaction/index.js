@@ -19,7 +19,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback
 } from 'react-native';
-import navigationConfig from '../../ configs/navigation.config';
+import constantConfig from '../../ configs/constant.config';
 import { useToastMessage } from '../../hooks/toast.hook';
 import categoryServices from '../../services/category.services';
 import transactionServices from '../../services/transaction.services';
@@ -61,7 +61,7 @@ export default function CreateTransactionScreen() {
       .createTransaction(payload)
       .then(() => {
         showToast('', 'Success!');
-        navigate(navigationConfig.Screens.Home);
+        navigate(constantConfig.Screens.Home);
       })
       .catch((e) => {
         console.log(JSON.stringify(e));
@@ -135,7 +135,7 @@ export default function CreateTransactionScreen() {
                   h="39"
                   ml={4}
                   onPress={() =>
-                    navigate(navigationConfig.Screens.CreateCategory)
+                    navigate(constantConfig.Screens.CreateCategory)
                   }
                 >
                   <AddIcon color="white" />
